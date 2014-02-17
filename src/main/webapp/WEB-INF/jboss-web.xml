@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
 	<context-root>/api/sfa</context-root>
+	<server-instance>xmlrpc-server</server-instance>
+	<virtual-host>xmlrpc-host</virtual-host>
 </jboss-web>

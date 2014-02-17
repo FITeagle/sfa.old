@@ -15,4 +15,10 @@
         <servlet-name>XmlRpcServlet</servlet-name>
         <url-pattern>/*</url-pattern>
   </servlet-mapping>
+  <security-constraint>
+  	<web-resource-collection>
+  		<web-resource-name>xmlrpc</web-resource-name>
+  		<url-pattern>/*</url-pattern>
+  	</web-resource-collection>
+  </security-constraint>
 </web-app>
