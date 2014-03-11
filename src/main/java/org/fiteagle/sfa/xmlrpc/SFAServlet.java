@@ -29,6 +29,14 @@ public class SFAServlet extends XmlRpcServlet {
 		
 	}
 	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		System.out.println("!!!!!!!!!!!!!!!!!!test call ok!!!!!!!!!!!!!!!!!!!!!!!");
+		
+	}
+	
 	
 	
 

@@ -1,5 +1,13 @@
 package org.fiteagle.sfa.listresources;
 
+import java.io.StringWriter;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
 import org.fiteagle.api.core.ResourceRepository;
 import org.fiteagle.sfa.common.AMCode;
 import org.fiteagle.sfa.common.AMResult;
@@ -16,9 +24,14 @@ import org.fiteagle.sfa.common.ListCredentials;
 //import org.fiteagle.sfa.common.GENI_CodeEnum;
 //import org.fiteagle.sfa.common.ListCredentials;
 import org.fiteagle.sfa.common.SFAv3RequestProcessor;
+import org.fiteagle.sfa.rspec.advertisement.AvailableContents;
+import org.fiteagle.sfa.rspec.advertisement.LocationContents;
+import org.fiteagle.sfa.rspec.advertisement.NodeContents;
+import org.fiteagle.sfa.rspec.advertisement.ObjectFactory;
 ////import org.fiteagle.sfa.rspec.advertisement.AdvertisementRspecTranslator;
 //import org.fiteagle.sfa.rspec.advertisement.RSpecContents;
 //
+import org.fiteagle.sfa.rspec.advertisement.RSpecContents;
 
 public class ListResourceRequestProcessor extends SFAv3RequestProcessor {
 
@@ -38,15 +51,26 @@ public class ListResourceRequestProcessor extends SFAv3RequestProcessor {
 			addResourceRepository();
 		}
 		
-		return getResult(credentials, options);
+		ListResourcesResult result = null;
+		
+		try {
+			result = getResult(credentials, options);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result; 
 	}
-
+	
+	
 	private void addResourceRepository() {
 		//TODO: lookup and set Repository for ListResourceRequestProcessor
+//		this is only to test, get the real values from the interfaces!!
+		
 	}
 
 	private ListResourcesResult getResult(ListCredentials listCredentials,
-			ListResourceOptions options) {
+			ListResourceOptions options) throws JAXBException {
 
 		System.out.println("get resut is called...");
 		Object value = getValue();
@@ -74,12 +98,61 @@ public class ListResourceRequestProcessor extends SFAv3RequestProcessor {
 
 	public String getOutput() {
 		// TODO: see what to send here!
-		return null;
+		return "";
 	}
 
-	public Object getValue() {
-		return resourceRepository.listResources();
+	public Object getValue() throws JAXBException {
+//		return resourceRepository.listResources();
+//		TODO: change this. this is only for test!
+		return getMockRepositoryResponse();
 	}
+	private String getMockRepositoryResponse() throws JAXBException {
+		RSpecContents adRSpecContents = new RSpecContents();
+		adRSpecContents.setType("advertisement");
+		List<Object> rspecElements = adRSpecContents.getAnyOrNodeOrLink();
+		Object node = createMockNode();
+		rspecElements.add(node);
+		
+		return getStringFromAdvertisedRSpec(adRSpecContents);
+	}
+	
+	private Object createMockNode() {
+		NodeContents node = new NodeContents();
+
+		node.setComponentId("testCompId");
+		node.setComponentManagerId("testComponentManagerId");
+		node.setExclusive(true);
+
+		List<Object> nodeContent = node.getAnyOrRelationOrLocation();
+		AvailableContents available = new AvailableContents();
+		available.setNow(true);
+		nodeContent.add(new ObjectFactory().createAvailable(available));
+
+		LocationContents location = new LocationContents();
+		location.setCountry("DE");
+		location.setLatitude("12.12312");
+		location.setLongitude("0.3232");
+		nodeContent.add(new ObjectFactory().createLocation(location));
+		return new ObjectFactory().createNode(node);
+	}
+	private String getStringFromAdvertisedRSpec(RSpecContents adRSpecContents) throws JAXBException {
+		JAXBElement<RSpecContents> rspecElem = new ObjectFactory()
+				.createRspec(adRSpecContents);
+
+		JAXBContext context = JAXBContext
+				.newInstance("org.fiteagle.sfa.rspec.advertisement");
+		Marshaller marshaller = context.createMarshaller();
+		marshaller
+				.setProperty(
+						Marshaller.JAXB_SCHEMA_LOCATION,
+						"http://www.geni.net/resources/rspec/3 http://www.geni.net/resources/rspec/3/ad.xsd");
+		StringWriter stringWriter = new StringWriter();
+		marshaller.marshal(rspecElem, stringWriter);
+
+		return stringWriter.toString();
+	}
+	
+	
 
 	public static ResourceRepository getResourceRepository() {
 		return resourceRepository;

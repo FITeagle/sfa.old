@@ -1,34 +1,32 @@
 package org.fiteagle.sfa.common;
-//package org.fiteagle.interactors.sfa.common;
-//
 //import org.fiteagle.core.ResourceAdapterManager;
-//import org.fiteagle.core.aaa.KeyStoreManagement;
+import org.fiteagle.core.aaa.authentication.KeyStoreManagement;
 //import org.fiteagle.core.groupmanagement.GroupDBManager;
-//import org.fiteagle.interactors.sfa.allocate.AllocateRequestProcessor;
-//import org.fiteagle.interactors.sfa.delete.DeleteRequestProcessor;
-//import org.fiteagle.interactors.sfa.describe.DescribeRequestProcessor;
-//import org.fiteagle.interactors.sfa.getSelfCredential.GetSelfCredentialRequestProcessor;
-//import org.fiteagle.interactors.sfa.getversion.GetVersionRequestProcessor;
-//import org.fiteagle.interactors.sfa.listresources.ListResourceRequestProcessor;
-//import org.fiteagle.interactors.sfa.performoperationalaction.PerformOperationalActionRequestProcessor;
-//import org.fiteagle.interactors.sfa.provision.ProvisionRequestProcessor;
-//import org.fiteagle.interactors.sfa.register.RegisterRequestProcessor;
-//import org.fiteagle.interactors.sfa.resolve.ResolveRequestProcessor;
-//import org.fiteagle.interactors.sfa.status.StatusRequestProcessor;
-//
-//public class SFARequestProcessorFactory {
-//
-//	private static SFARequestProcessorFactory factory = new SFARequestProcessorFactory();
-//	
-//	public static SFARequestProcessorFactory getInstance(){
-//		return factory;
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public <E extends SFAv3RequestProcessor> E createRequestProcessor(SFAv3MethodsEnum method){
-//		
-//		E result = null;
-//		switch(method){
+//import org.fiteagle.sfa.allocate.AllocateRequestProcessor;
+//import org.fiteagle.sfa.delete.DeleteRequestProcessor;
+//import org.fiteagle.sfa.describe.DescribeRequestProcessor;
+//import org.fiteagle.sfa.getSelfCredential.GetSelfCredentialRequestProcessor;
+import org.fiteagle.sfa.getversion.GetVersionRequestProcessor;
+import org.fiteagle.sfa.listresources.ListResourceRequestProcessor;
+//import org.fiteagle.sfa.performoperationalaction.PerformOperationalActionRequestProcessor;
+//import org.fiteagle.sfa.provision.ProvisionRequestProcessor;
+//import org.fiteagle.sfa.register.RegisterRequestProcessor;
+//import org.fiteagle.sfa.resolve.ResolveRequestProcessor;
+//import org.fiteagle.sfa.status.StatusRequestProcessor;
+
+public class SFARequestProcessorFactory {
+
+	private static SFARequestProcessorFactory factory = new SFARequestProcessorFactory();
+	
+	public static SFARequestProcessorFactory getInstance(){
+		return factory;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <E extends SFAv3RequestProcessor> E createRequestProcessor(SFAv3MethodsEnum method){
+		
+		E result = null;
+		switch(method){
 //		case ALLOCATE:
 //		  AllocateRequestProcessor allocateRequestProcessor = new AllocateRequestProcessor();
 //		  allocateRequestProcessor.setResourceManager(ResourceAdapterManager.getInstance());
@@ -44,9 +42,9 @@ package org.fiteagle.sfa.common;
 //		case DESCRIBE:
 //			result = (E) new DescribeRequestProcessor();
 //			break;
-//		case LIST_RESOURCES:
-//			result = (E) new ListResourceRequestProcessor();
-//			break;
+		case LIST_RESOURCES:
+			result = (E) new ListResourceRequestProcessor();
+			break;
 //		case PERFORM_OPERATIONAL_ACTION:
 //			result = (E) new PerformOperationalActionRequestProcessor();
 //			break;
@@ -65,9 +63,9 @@ package org.fiteagle.sfa.common;
 //		case STATUS:
 //		  result = (E) new StatusRequestProcessor();
 //			break;
-//		case GET_VERSION:
-//			result = (E) new GetVersionRequestProcessor();
-//			break;
+		case GET_VERSION:
+			result = (E) new GetVersionRequestProcessor();
+			break;
 //		case REGISTER: 
 //		RegisterRequestProcessor registerRequestProcessor = new RegisterRequestProcessor(KeyStoreManagement.getInstance(), GroupDBManager.getInstance());
 //		  result = (E) registerRequestProcessor;
@@ -75,11 +73,11 @@ package org.fiteagle.sfa.common;
 //		case RESOLVE: 
 //      result = (E) new ResolveRequestProcessor();
 //      break;
-//		default:
-//			break;
-//			
-//		}
-//		
-//		return result;
-//	}
-//}
+		default:
+			break;
+			
+		}
+		
+		return result;
+	}
+}

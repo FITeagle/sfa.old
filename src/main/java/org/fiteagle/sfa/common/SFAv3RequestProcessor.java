@@ -7,7 +7,7 @@ import java.util.zip.Deflater;
 //import org.fiteagle.adapter.common.OpenstackResourceAdapter;
 //import org.fiteagle.adapter.common.ResourceAdapter;
 //import org.fiteagle.adapter.common.SSHAccessable;
-//import org.fiteagle.core.config.InterfaceConfiguration;
+import org.fiteagle.core.config.preferences.InterfaceConfiguration;
 //import org.fiteagle.interactors.sfa.rspec.SFAv3RspecTranslator;
 //import org.fiteagle.interactors.sfa.rspec.ext.ObjectFactory;
 
@@ -17,8 +17,8 @@ public abstract class SFAv3RequestProcessor {
 	public String outPutString = "";
 	private X509Certificate userCertificate;
 
-//	protected InterfaceConfiguration interfaceConfig = InterfaceConfiguration
-//			.getInstance();
+	protected InterfaceConfiguration interfaceConfig = InterfaceConfiguration
+			.getInstance();
 
 	public abstract AMResult processRequest(ListCredentials credentials,
 			Object... specificArgs);

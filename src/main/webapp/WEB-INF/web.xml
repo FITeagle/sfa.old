@@ -5,7 +5,9 @@
       version="3.0"> 
   <servlet>
         <servlet-name>XmlRpcServlet</servlet-name>
-        <servlet-class>org.fiteagle.sfa.xmlrpc.SFAServlet</servlet-class>
+<!--         <servlet-class>org.fiteagle.sfa.xmlrpc.SFAServlet</servlet-class> -->
+        <servlet-class>org.fiteagle.delivery.xmlrpc.FITeagleServlet</servlet-class>
+        
         <init-param>
           <param-name>enabledForExtensions</param-name>
           <param-value>true</param-value>
@@ -15,10 +17,23 @@
         <servlet-name>XmlRpcServlet</servlet-name>
         <url-pattern>/*</url-pattern>
   </servlet-mapping>
+  
   <security-constraint>
   	<web-resource-collection>
   		<web-resource-name>xmlrpc</web-resource-name>
   		<url-pattern>/*</url-pattern>
   	</web-resource-collection>
   </security-constraint>
+  
+  
+<!--   <security-constraint> -->
+<!--     <web-resource-collection> -->
+<!--       <web-resource-name>XmlRpcServlet</web-resource-name> -->
+<!--       <url-pattern>/api/sfa/*</url-pattern> -->
+<!--     </web-resource-collection> -->
+<!--     <user-data-constraint> -->
+<!--       <transport-guarantee>CONFIDENTIAL</transport-guarantee> -->
+<!--     </user-data-constraint> -->
+<!--   </security-constraint> -->
+  
 </web-app>
